@@ -9,27 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
-var common_1 = require("@nestjs/common");
-var app_service_1 = require("./app.service");
-var AppController = (function () {
-    function AppController(appService) {
-        this.appService = appService;
+exports.User = void 0;
+var class_validator_1 = require("class-validator");
+var typeorm_1 = require("typeorm");
+var User = (function () {
+    function User() {
     }
-    AppController.prototype.getHello = function () {
-        return this.appService.getHello();
-    };
     __decorate([
-        (0, common_1.Get)(),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", String)
-    ], AppController.prototype, "getHello", null);
-    AppController = __decorate([
-        (0, common_1.Controller)(),
-        __metadata("design:paramtypes", [app_service_1.AppService])
-    ], AppController);
-    return AppController;
+        (0, typeorm_1.PrimaryGeneratedColumn)(),
+        __metadata("design:type", Number)
+    ], User.prototype, "Pk_User", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        (0, class_validator_1.IsEmail)(),
+        __metadata("design:type", String)
+    ], User.prototype, "Email", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        (0, class_validator_1.MinLength)(8),
+        (0, class_validator_1.MaxLength)(15),
+        __metadata("design:type", String)
+    ], User.prototype, "Password", void 0);
+    User = __decorate([
+        (0, typeorm_1.Entity)()
+    ], User);
+    return User;
 }());
-exports.AppController = AppController;
-//# sourceMappingURL=app.controller.js.map
+exports.User = User;
+//# sourceMappingURL=user.entity.js.map

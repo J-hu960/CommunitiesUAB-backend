@@ -7,17 +7,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-let AppModule = class AppModule {
-};
+var common_1 = require("@nestjs/common");
+var app_controller_1 = require("./app.controller");
+var app_service_1 = require("./app.service");
+var typeorm_1 = require("@nestjs/typeorm");
+var throttler_1 = require("@nestjs/throttler");
+var users_module_1 = require("./users/users.module");
+var user_entity_1 = require("./users/entities/user.entity");
+var AppModule = (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        (0, common_1.Module)({
+            imports: [
+                typeorm_1.TypeOrmModule.forRoot({
+                    type: 'mysql',
+                    host: 'localhost',
+                    port: 3306,
+                    username: 'root',
+                    password: '21912191-Js',
+                    database: 'communitiesUAB',
+                    entities: [user_entity_1.User],
+                    synchronize: true,
+                }),
+                throttler_1.ThrottlerModule.forRoot([{
+                        ttl: 6000,
+                        limit: 10
+                    }]),
+                users_module_1.UsersModule
+            ],
+            controllers: [app_controller_1.AppController],
+            providers: [app_service_1.AppService],
+        })
+    ], AppModule);
+    return AppModule;
+}());
 exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
-    })
-], AppModule);
 //# sourceMappingURL=app.module.js.map
