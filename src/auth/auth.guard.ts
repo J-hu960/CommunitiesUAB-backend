@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate{
             const payload = await this.jwtService.verifyAsync(
                 token,
                 {
-                    secret:'Mi llave secreta no utilizar asi llevar a file configuracion'
+                    secret:'Esta es la llave secreta deberia estar en variables de configuracion.'
                 }
             )
             const user = this.userService.findUserbyMail(payload.mail)

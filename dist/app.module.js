@@ -15,6 +15,8 @@ var throttler_1 = require("@nestjs/throttler");
 var users_module_1 = require("./users/users.module");
 var user_entity_1 = require("./users/entities/user.entity");
 var auth_module_1 = require("./auth/auth.module");
+var communities_module_1 = require("./communities/communities.module");
+var community_entity_1 = require("./communities/entities/community.entity");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -28,7 +30,7 @@ var AppModule = (function () {
                     username: 'root',
                     password: '21912191-Js',
                     database: 'communitiesUAB',
-                    entities: [user_entity_1.Users],
+                    entities: [user_entity_1.Users, community_entity_1.Community],
                     synchronize: false,
                 }),
                 throttler_1.ThrottlerModule.forRoot([{
@@ -36,7 +38,8 @@ var AppModule = (function () {
                         limit: 10
                     }]),
                 users_module_1.UsersModule,
-                auth_module_1.AuthModule
+                auth_module_1.AuthModule,
+                communities_module_1.CommunitiesModule
             ],
             controllers: [app_controller_1.AppController],
             providers: [app_service_1.AppService],

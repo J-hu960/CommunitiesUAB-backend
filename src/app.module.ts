@@ -6,6 +6,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { UsersModule } from './users/users.module';
 import { Users } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { CommunitiesModule } from './communities/communities.module';
+import { Community } from './communities/entities/community.entity';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: '21912191-Js',
       database: 'communitiesUAB',
-      entities: [Users],
+      entities: [Users,Community],
       synchronize: false,
 
     }),
@@ -25,7 +27,8 @@ import { AuthModule } from './auth/auth.module';
       limit:10
     }]),
     UsersModule,
-    AuthModule
+    AuthModule,
+    CommunitiesModule
   ],
   controllers: [AppController],
   providers: [AppService],

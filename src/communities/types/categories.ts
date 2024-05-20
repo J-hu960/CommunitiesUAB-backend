@@ -1,0 +1,1 @@
+export type categories= "Académico" | "Investigación"|"Deportes"|"Ocio"|"Cultura"|"Politica"
