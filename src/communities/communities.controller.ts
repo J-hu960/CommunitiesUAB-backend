@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards,Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards,Request, ParseIntPipe, Req } from '@nestjs/common';
 import { CommunitiesService } from './communities.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Community } from './entities/community.entity';
 
 
 @UseGuards(AuthGuard)
@@ -22,10 +23,16 @@ export class CommunitiesController {
   findAll() {
     return this.communitiesService.findAll();
   }
+  
+  @Post(':pkCommunitie')  
+  addMember(@Request() req, @Param('pkCommunitie') idCommunity:number) {
+    const newMember = req.user
+    return this.communitiesService.addMemberToCommunitie(newMember,idCommunity);
+  }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.communitiesService.findOne(+id);
+  @Get(':idUser')
+  findUserCommunities(@Req() req):Promise<Community[]|[]> {
+    return this.communitiesService.findUsersCommunities(req.user);
   }
 
   @Patch(':id')

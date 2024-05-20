@@ -1,4 +1,4 @@
-import { Injectable, Req, Request, RequestMethod, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException, Req, Request, RequestMethod, UseGuards } from '@nestjs/common';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,8 +31,11 @@ export class CommunitiesService {
     return communities
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} community`;
+  findUsersCommunities(user: Users) {
+    const usersCommunities:Promise<Community[]|[]> = this.communityRepositorty.createQueryBuilder('communitie')
+    .innerJoinAndSelect('communitie.members',"Users")
+    .getMany()
+    return usersCommunities
   }
 
   update(id: number, updateCommunityDto: UpdateCommunityDto) {
@@ -42,4 +45,25 @@ export class CommunitiesService {
   remove(id: number) {
     return `This action removes a #${id} community`;
   }
+
+  async addMemberToCommunitie(user: Users, idCommunity: number) {
+    const community: Community = await this.communityRepositorty.createQueryBuilder('coms')
+      .select()
+      .where('coms.PK_Communitie = :pkComunity', { pkComunity: idCommunity })
+      .getOne();
+  
+    if (community) {
+      if (!community.members) {
+        community.members = [];
+      }
+      community.members.push(user);
+  
+      await this.communityRepositorty.save(community);
+  
+      return community;
+    } else {
+      throw new NotFoundException();
+    }
+  }
+  
 }
