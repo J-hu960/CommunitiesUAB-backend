@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { UsersModule } from './users/users.module';
-import { User } from './users/entities/user.entity';
+import { Users } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -16,8 +16,8 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: '21912191-Js',
       database: 'communitiesUAB',
-      entities: [User],
-      synchronize: true,
+      entities: [Users],
+      synchronize: false,
 
     }),
     ThrottlerModule.forRoot([{

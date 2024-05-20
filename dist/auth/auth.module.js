@@ -11,14 +11,22 @@ var common_1 = require("@nestjs/common");
 var auth_service_1 = require("./auth.service");
 var auth_controller_1 = require("./auth.controller");
 var users_service_1 = require("../users/users.service");
+var users_module_1 = require("../users/users.module");
+var jwt_1 = require("@nestjs/jwt");
 var AuthModule = (function () {
     function AuthModule() {
     }
     AuthModule = __decorate([
         (0, common_1.Module)({
-            imports: [users_service_1.UsersService],
+            imports: [users_module_1.UsersModule,
+                jwt_1.JwtModule.register({
+                    global: true,
+                    secret: 'Esta es la llave secreta deberia estar en variables de configuracion.',
+                    signOptions: { expiresIn: '86400s' }
+                })
+            ],
             controllers: [auth_controller_1.AuthController],
-            providers: [auth_service_1.AuthService],
+            providers: [auth_service_1.AuthService, users_service_1.UsersService],
         })
     ], AuthModule);
     return AuthModule;

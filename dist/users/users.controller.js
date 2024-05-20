@@ -15,15 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 var common_1 = require("@nestjs/common");
 var users_service_1 = require("./users.service");
-var create_user_dto_1 = require("./dto/create-user.dto");
 var update_user_dto_1 = require("./dto/update-user.dto");
 var UsersController = (function () {
     function UsersController(usersService) {
         this.usersService = usersService;
     }
-    UsersController.prototype.create = function (createUserDto) {
-        return this.usersService.create(createUserDto);
-    };
     UsersController.prototype.findAll = function () {
         return this.usersService.findAll();
     };
@@ -36,13 +32,6 @@ var UsersController = (function () {
     UsersController.prototype.remove = function (id) {
         return this.usersService.remove(+id);
     };
-    __decorate([
-        (0, common_1.Post)(),
-        __param(0, (0, common_1.Body)()),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-        __metadata("design:returntype", void 0)
-    ], UsersController.prototype, "create", null);
     __decorate([
         (0, common_1.Get)(),
         __metadata("design:type", Function),

@@ -9,31 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Users = void 0;
 var class_validator_1 = require("class-validator");
 var typeorm_1 = require("typeorm");
-var User = (function () {
-    function User() {
+var Users = (function () {
+    function Users() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], User.prototype, "Pk_User", void 0);
+    ], Users.prototype, "Pk_User", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         (0, class_validator_1.IsEmail)(),
         __metadata("design:type", String)
-    ], User.prototype, "Email", void 0);
+    ], Users.prototype, "Email", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         (0, class_validator_1.MinLength)(8),
         (0, class_validator_1.MaxLength)(15),
         __metadata("design:type", String)
-    ], User.prototype, "Password", void 0);
-    User = __decorate([
+    ], Users.prototype, "Password", void 0);
+    Users = __decorate([
         (0, typeorm_1.Entity)()
-    ], User);
-    return User;
+    ], Users);
+    return Users;
 }());
-exports.User = User;
+exports.Users = Users;
 //# sourceMappingURL=user.entity.js.map

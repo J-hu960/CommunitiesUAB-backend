@@ -3,17 +3,29 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { Users } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private userRepository:Repository<User>
+    @InjectRepository(Users)
+    private userRepository:Repository<Users>
   ){}
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async createUser(email:string,hashedPassword:string):Promise<CreateUserDto> {
+    await  this.userRepository.createQueryBuilder('user')
+    .insert()
+    .into(Users)
+    .values({
+       Email:email,
+       Password:hashedPassword,
+    }).execute()
+    const newUser ={
+      Email:email,
+      Password:hashedPassword
+    }
+    return newUser
   }
+
 
   findAll() {
     return `This action returns all users`;
@@ -30,4 +42,8 @@ export class UsersService {
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
+  findUserbyMail(email:string):Promise<Users>{
+    return this.userRepository.createQueryBuilder('user')
+    .where('user.Email=:email',{email:email}).getOne()
+   }
 }

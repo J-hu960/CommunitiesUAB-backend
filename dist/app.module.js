@@ -28,8 +28,8 @@ var AppModule = (function () {
                     username: 'root',
                     password: '21912191-Js',
                     database: 'communitiesUAB',
-                    entities: [user_entity_1.User],
-                    synchronize: true,
+                    entities: [user_entity_1.Users],
+                    synchronize: false,
                 }),
                 throttler_1.ThrottlerModule.forRoot([{
                         ttl: 6000,
