@@ -14,6 +14,7 @@ var typeorm_1 = require("@nestjs/typeorm");
 var throttler_1 = require("@nestjs/throttler");
 var users_module_1 = require("./users/users.module");
 var user_entity_1 = require("./users/entities/user.entity");
+var auth_module_1 = require("./auth/auth.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -34,7 +35,8 @@ var AppModule = (function () {
                         ttl: 6000,
                         limit: 10
                     }]),
-                users_module_1.UsersModule
+                users_module_1.UsersModule,
+                auth_module_1.AuthModule
             ],
             controllers: [app_controller_1.AppController],
             providers: [app_service_1.AppService],

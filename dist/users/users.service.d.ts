@@ -1,6 +1,10 @@
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
 export declare class UsersService {
+    private userRepository;
+    constructor(userRepository: Repository<User>);
     create(createUserDto: CreateUserDto): string;
     findAll(): string;
     findOne(id: number): string;
