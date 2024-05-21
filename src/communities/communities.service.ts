@@ -65,5 +65,30 @@ export class CommunitiesService {
       throw new NotFoundException();
     }
   }
+
+  async findByTitle(title:string):Promise<Community[]|[]>{
+    const communities:Community[] = await this.communityRepositorty.createQueryBuilder('coms')
+    .select()
+    .where('coms.title LIKE :title',{title:title}).getMany();
+    return communities
+
+  }
+
+  async findByTitleAndCategory(title:string,category:string):Promise<Community[]|[]>{
+    const communities:Community[] = await this.communityRepositorty.createQueryBuilder('coms')
+    .select()
+    .where('coms.title LIKE :title',{title:title})
+    .andWhere('coms.category = :category',{category:category})
+    .getMany();
+    return communities
+
+  }
+  async findByCategory(category:string):Promise<Community[]|[]>{
+    const communities:Community[] = await this.communityRepositorty.createQueryBuilder('coms')
+    .select()
+    .where('coms.category = :category',{category:category})
+    .getMany();
+    return communities
+  }
   
 }

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards,Request, ParseIntPipe, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards,Request, ParseIntPipe, Req, Query } from '@nestjs/common';
 import { CommunitiesService } from './communities.service';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Community } from './entities/community.entity';
+import { title } from 'process';
 
 
 @UseGuards(AuthGuard)
@@ -20,7 +21,18 @@ export class CommunitiesController {
   }
 
   @Get()
-  findAll() {
+  findAll(
+    @Query('title') title?:string,
+    @Query('category') category?:string
+  ) {
+    if(title && category){
+      return this.communitiesService.findByTitleAndCategory(title,category)
+    }
+    else if(title){
+      return this.communitiesService.findByTitle(title)
+    }else if(category){
+      return this.communitiesService.findByCategory(category)
+    }
     return this.communitiesService.findAll();
   }
   
