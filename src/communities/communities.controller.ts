@@ -46,11 +46,14 @@ export class CommunitiesController {
     return this.communitiesService.findAll();
   }
   
-  // @Post(':pkCommunitie')  
-  // addMember(@Request() req, @Param('pkCommunitie') idCommunity:number) {
-  //   const newMember = req.user
-  //   return this.communitiesService.addMemberToCommunitie(newMember,idCommunity);
-  // }
+   @Post(':pkCommunitie/:idUser')  
+   async addMember(
+     @Param('pkCommunitie') idCommunity:number,
+     @Param('idUser') idUser:number
+    ) {
+     const newMember = await this.usersService.findOne(idUser)
+     return this.communitiesService.addMemberToCommunitie(newMember,idCommunity);
+   }
 
   @Get(':idUser')
   //:Promise<Community[]|[]>
