@@ -6,19 +6,28 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Community } from './entities/community.entity';
 import { title } from 'process';
 import { Users } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 
 
 @UseGuards(AuthGuard)
 @Controller('communities')
 export class CommunitiesController {
   constructor(
-    private readonly communitiesService: CommunitiesService
+    private readonly communitiesService: CommunitiesService,
+    private usersService:UsersService
   ) {}
 
-  @Post()
-  create(@Body() createCommunityDto: CreateCommunityDto,@Request() req) {
-    const creator:Users = req.user
-    return this.communitiesService.create(createCommunityDto,creator);
+  @Post(':idUser')
+  async create(@Param('idUser') idUser:number,@Body() createCommunityDto: CreateCommunityDto) {
+    try {
+      const user:Users = await this.usersService.findOne(idUser)
+      console.log(user)
+      return this.communitiesService.create(createCommunityDto,user);
+      
+    } catch (error) {
+      console.log(error)
+    }
+   
   }
 
   @Get()
@@ -37,15 +46,18 @@ export class CommunitiesController {
     return this.communitiesService.findAll();
   }
   
-  @Post(':pkCommunitie')  
-  addMember(@Request() req, @Param('pkCommunitie') idCommunity:number) {
-    const newMember = req.user
-    return this.communitiesService.addMemberToCommunitie(newMember,idCommunity);
-  }
+  // @Post(':pkCommunitie')  
+  // addMember(@Request() req, @Param('pkCommunitie') idCommunity:number) {
+  //   const newMember = req.user
+  //   return this.communitiesService.addMemberToCommunitie(newMember,idCommunity);
+  // }
 
   @Get(':idUser')
-  findUserCommunities(@Req() req):Promise<Community[]|[]> {
-    return this.communitiesService.findUsersCommunities(req.user);
+  //:Promise<Community[]|[]>
+   async findUserCommunities(@Param('idUser') idUser)  {
+    const user:Users = await this.usersService.findOne(idUser)
+    console.log(user)
+    return this.communitiesService.findUsersCommunities(user);
   }
 
   @Patch(':id')

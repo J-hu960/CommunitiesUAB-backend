@@ -31,13 +31,13 @@ export class CommunitiesService {
     return communities
   }
 
-  findUsersCommunities(user: Users) {
-    const usersCommunities:Promise<Community[]|[]> = this.communityRepositorty.createQueryBuilder('communitie')
-    .innerJoinAndSelect('communitie.members',"Users")
-    .getMany()
-    return usersCommunities
+  async findUsersCommunities(user: Users): Promise<Community[]> {
+    return this.communityRepositorty.createQueryBuilder('community')
+      .leftJoinAndSelect('community.members', 'members')
+      .leftJoinAndSelect('community.createdBY', 'creator')
+      .where('members.Pk_User = :userId OR creator.Pk_User = :userId', { userId: user.Pk_User })
+      .getMany();
   }
-
   update(id: number, updateCommunityDto: UpdateCommunityDto) {
     return `This action updates a #${id} community`;
   }

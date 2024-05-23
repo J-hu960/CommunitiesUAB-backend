@@ -27,7 +27,7 @@ export class Community {
     @JoinTable()
     members: Users[];
 
-    @ManyToOne(() => Users, (user) => user.Pk_User)
+    @ManyToOne(() => Users, (user) => user.Pk_User,{cascade:true})
     createdBY: Users;
 
     @CreateDateColumn()
