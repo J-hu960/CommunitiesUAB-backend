@@ -5,6 +5,7 @@ import { UpdateCommunityDto } from './dto/update-community.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Community } from './entities/community.entity';
 import { title } from 'process';
+import { Users } from 'src/users/entities/user.entity';
 
 
 @UseGuards(AuthGuard)
@@ -16,7 +17,7 @@ export class CommunitiesController {
 
   @Post()
   create(@Body() createCommunityDto: CreateCommunityDto,@Request() req) {
-    const creator = req.user
+    const creator:Users = req.user
     return this.communitiesService.create(createCommunityDto,creator);
   }
 
