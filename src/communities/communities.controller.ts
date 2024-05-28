@@ -21,7 +21,7 @@ export class CommunitiesController {
   async create(@Param('idUser') idUser:number,@Body() createCommunityDto: CreateCommunityDto) {
     try {
       const user:Users = await this.usersService.findOne(idUser)
-      console.log(user)
+      await console.log(user)
       return this.communitiesService.create(createCommunityDto,user);
       
     } catch (error) {

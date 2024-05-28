@@ -15,14 +15,15 @@ export class CommunitiesService {
     private communityRepositorty:Repository<Community>
   ){}
   create(createCommunityDto: CreateCommunityDto,creator:Users  ) {
-    this.communityRepositorty.createQueryBuilder('com')
-    .insert()
-    .into(Community)
-    .values({
-      ...createCommunityDto,
-      createdBY:creator
-    })
-    .execute()
+    const community = new Community()
+    community.category=createCommunityDto.category
+    community.createdBY = creator
+    community.description = createCommunityDto.description
+    community.link_community = createCommunityDto.link_community
+    community.photo = createCommunityDto.photo
+    community.title = createCommunityDto.title
+    
+    this.communityRepositorty.save(community)
   }
 
   async findAll():Promise<Community[] | []> {

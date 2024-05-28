@@ -34,7 +34,7 @@ export class UsersService {
   findOne(id: number):Promise<Users> {
     return this.userRepository.createQueryBuilder('user')
     .select()
-    .where('user.PK_User =:id',{id:id}).getOne();
+    .where('user.Pk_User =:id',{id:id}).getOne();
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

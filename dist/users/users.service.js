@@ -84,7 +84,9 @@ var UsersService = (function () {
         return "This action returns all users";
     };
     UsersService.prototype.findOne = function (id) {
-        return "This action returns a #".concat(id, " user");
+        return this.userRepository.createQueryBuilder('user')
+            .select()
+            .where('user.Pk_User =:id', { id: id }).getOne();
     };
     UsersService.prototype.update = function (id, updateUserDto) {
         return "This action updates a #".concat(id, " user");
