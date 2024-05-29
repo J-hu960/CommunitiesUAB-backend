@@ -57,7 +57,7 @@ export class CommunitiesController {
 
   @Get(':idUser')
   //:Promise<Community[]|[]>
-   async findUserCommunities(@Param('idUser') idUser)  {
+   async findUserCommunities(@Param('idUser') idUser:number)  {
     const user:Users = await this.usersService.findOne(idUser)
     console.log(user)
     return this.communitiesService.findUsersCommunities(user);
@@ -69,7 +69,7 @@ export class CommunitiesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.communitiesService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.communitiesService.removeCommunity(id);
   }
 }

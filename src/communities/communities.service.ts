@@ -43,8 +43,12 @@ export class CommunitiesService {
     return `This action updates a #${id} community`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} community`;
+  removeCommunity(id: number) {
+    return  this.communityRepositorty.createQueryBuilder()
+    .delete()
+    .from(Community)
+    .where('Pk_Communitie = :id',{id:id})
+    .execute()
   }
 
   async addMemberToCommunitie(user: Users, idCommunity: number) {
