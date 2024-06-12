@@ -25,8 +25,8 @@ export class AuthGuard implements CanActivate{
                     secret:'Esta es la llave secreta deberia estar en variables de configuracion.'
                 }
             )
-            const user = this.userService.findUserbyMail(payload.mail)
-            request['user'] = await user
+            const user = await this.userService.findUserbyMail(payload.mail)
+            request['user'] =  user
             console.log(user)
 
             
