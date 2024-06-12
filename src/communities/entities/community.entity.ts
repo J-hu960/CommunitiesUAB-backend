@@ -6,30 +6,30 @@ import { Users } from "src/users/entities/user.entity";
 export class Community {
 
     @PrimaryGeneratedColumn()
-    Pk_Communitie: number;
+    Pk_Communitie!: number;
 
     @Column()
-    title: string;
+    title!: string;
 
     @Column()
-    category: categories;
+    category!: categories;
 
     @Column()
-    photo: string;
+    photo!: string;
 
     @Column()
-    description: string;
+    description!: string;
 
     @Column()
-    link_community: string;
+    link_community!: string;
 
     @ManyToMany(() => Users)
     @JoinTable()
-    members: Users[];
+    members!: Users[];
 
-    @ManyToOne(() => Users, (user) => user.Pk_User,{cascade:true})
-    createdBY: Users;
+    @ManyToOne(() => Users, (user) => user.Pk_User, { cascade: true })
+    createdBY!: Users;
 
     @CreateDateColumn()
-    createdAt: Date;
+    createdAt!: Date;
 }

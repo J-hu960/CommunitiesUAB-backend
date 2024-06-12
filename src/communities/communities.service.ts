@@ -27,7 +27,7 @@ export class CommunitiesService {
   }
 
   async findAll():Promise<Community[] | []> {
-    const communities = await this.communityRepositorty.createQueryBuilder('coms')
+    const communities:Community[]|[] = await this.communityRepositorty.createQueryBuilder('coms')
     .select().getMany()
     return communities
   }
@@ -52,7 +52,7 @@ export class CommunitiesService {
   }
 
   async addMemberToCommunitie(user: Users, idCommunity: number) {
-    const community: Community = await this.communityRepositorty.createQueryBuilder('coms')
+    const community: Community|null = await this.communityRepositorty.createQueryBuilder('coms')
       .select()
       .where('coms.PK_Communitie = :pkComunity', { pkComunity: idCommunity })
       .getOne();
