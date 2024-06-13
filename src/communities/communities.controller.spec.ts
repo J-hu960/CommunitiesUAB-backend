@@ -10,7 +10,12 @@ import { CommunitiesServiceMocks } from './mocks/mock-communityService';
 
 describe('CommunitiesController', () => {
   let controller: CommunitiesController;
- 
+  let mockUser ={
+    Pk_User:8,
+    Email:'jordi@getMaxListeners.com',
+    Password:'21912191'
+
+  }
 
   let createCommunity:CreateCommunityDto = {
     title:'testCommunity',
@@ -19,12 +24,7 @@ describe('CommunitiesController', () => {
     description:'some description',
     link_community:'some_link.com'
   }
-  let mockUser ={
-    Pk_User:8,
-    Email:'jordi@getMaxListeners.com',
-    Password:'21912191'
-
-  }
+  
   let jwtServiceMock = {
     sign: jest.fn().mockReturnValue('mockToken'),
     verify: jest.fn().mockReturnValue({ userId: mockUser.Pk_User }),
@@ -66,4 +66,92 @@ describe('CommunitiesController', () => {
       ...createCommunity
     })
   })
+  it('should return communities with title=primera and category=Académico',async()=>{
+    const result = await controller.findAll('primera','Académico')
+    expect(result).toEqual([{
+      
+        Pk_Communitie: 1,
+    
+    
+        title: 'primera',
+    
+        category: 'Académico',
+    
+    
+        photo:'photurll',
+    
+        description: 'descccc',
+    
+    
+        link_community: 'link',
+    
+    
+        members: [mockUser],
+    
+        createdBY: mockUser,
+    
+        
+        createdAt:new Date('2024-01-01T00:00:00Z'),
+    
+      
+    }])
+  })
+  it('should return all communities ',async()=>{
+    const result = await controller.findAll()
+    expect(result).toEqual([
+      {
+        Pk_Communitie: 1,
+    
+    
+        title: 'primera',
+    
+        category: 'Académico',
+    
+    
+        photo:'photurll',
+    
+        description: 'descccc',
+    
+    
+        link_community: 'link',
+    
+    
+        members: [mockUser],
+    
+        createdBY: mockUser,
+    
+        
+        createdAt: new Date('2024-01-01T00:00:00Z'),
+    
+      },
+      {
+        Pk_Communitie: 2,
+    
+    
+        title: 'string',
+    
+        category: "Investigación",
+    
+    
+        photo:'photurll',
+    
+        description: 'descccc',
+    
+    
+        link_community: 'link',
+    
+    
+        members: [mockUser],
+    
+        createdBY: mockUser,
+    
+        
+        createdAt:new Date('2024-01-01T00:00:00Z'),
+    
+    
+      }
+    ])
+  })
+
+  
 });
